@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func Publish(file string, dryRun bool) (id string, err error) {
+func Publish(file string, rootID string, dryRun bool) (id string, err error) {
 	uri := viper.GetString("uri")
 	if len(uri) == 0 {
 		return id, errors.New("uri must be set in config")
@@ -55,6 +55,12 @@ func Publish(file string, dryRun bool) (id string, err error) {
 			Type:  "page",
 			Title: src.Title(),
 		}
+		fmt.Println(src.ID())
+
+		if rootID != "" {
+			c.Ancestors = []confluence.ContentAncestor{{ID: rootID}}
+		}
+
 		c.Body.Storage.Value = src.Output()
 		c.Body.Storage.Representation = "storage"
 		c.Space.Key = space // should be taken from repo config
@@ -84,10 +90,6 @@ func Publish(file string, dryRun bool) (id string, err error) {
 			}
 
 			if cur.Body.Storage.Value != c.Body.Storage.Value {
-				fmt.Println(cur.Body.Storage.Value)
-				fmt.Println("-------")
-				fmt.Println(c.Body.Storage.Value)
-
 				c.Version.Number = cur.Version.Number + 1
 				c, _, err = wiki.UpdateContent(c)
 				if err != nil {

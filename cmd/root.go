@@ -32,8 +32,13 @@ to quickly create a Cobra application.`,
 			panic(err)
 		}
 
+		root, err := dox.Publish("", "", dryRun) // root
+		if err != nil {
+			panic(err)
+		}
+
 		for _, v := range files {
-			id, err := dox.Publish(v, dryRun)
+			id, err := dox.Publish(v, root, dryRun)
 			if err != nil {
 				panic(err)
 			}
