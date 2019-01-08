@@ -1,4 +1,8 @@
-GO = go
+GO := go
+
+# environment
+GO111MODULE := on
+CGO_ENABLED := 0
 
 all: test build
 
