@@ -1,8 +1,8 @@
 GO := go
 
 # environment
-GO111MODULE := on
-CGO_ENABLED := 0
+export GO111MODULE = on
+export CGO_ENABLED = 0
 
 all: test build
 
