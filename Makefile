@@ -27,4 +27,4 @@ help:
 	@grep -E '$(HELP_PATTERN)' $(MAKEFILE_LIST) \
 		| sort \
 		| awk 'BEGIN {FS = ":.*?## "}; \
-			{printf "\033[36m%-$(HELP_DESC_OFFSET)s\033[0m %s\n", $$1, $$2}'
+			{printf "  \033[36m%-$(HELP_DESC_OFFSET)s\033[0m %s\n", $$1, $$2}'
